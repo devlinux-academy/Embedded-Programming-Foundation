@@ -1,3 +1,12 @@
+<p align="center">
+  <a href="https://github.com/your-org/embedded-software-core-foundation">
+    <img src="https://img.shields.io/badge/status-active-success?style=flat-square" alt="Status: active">
+  </a>
+  <img src="https://img.shields.io/badge/focus-C%20%7C%20OOP%20%7C%20Design%20Pattern%20%7C%20MISRA--C-blue?style=flat-square" alt="Focus">
+  <img src="https://img.shields.io/badge/level-Foundation%20%2F%20Fresher%20%2F%20Junior-orange?style=flat-square" alt="Level">
+  <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square" alt="License: MIT">
+</p>
+
 # 📘Embedded-Programming-Foundation
 
 Chương trình **Embedded Programming Foundation** được thiết kế cho **Fresher** và **Junior** muốn xây dựng nền móng vững chắc về **Lập trình C, OOP, Design Pattern, Clean Code và MISRA-C** - những kỹ năng cốt lõi giúp bước vào bất kỳ lĩnh vực nào của **IoT, Automotive, Firmware, Embedded Linux, Vi mạch**.
