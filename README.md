@@ -9,7 +9,7 @@
 
 # 📘Embedded-Programming-Foundation
 
-Chương trình **Embedded Programming Foundation** được thiết kế cho **Fresher** và **Junior** muốn xây dựng nền móng vững chắc về **Lập trình C, OOP, Design Pattern, Clean Code và MISRA-C** - những kỹ năng cốt lõi giúp bước vào bất kỳ lĩnh vực nào của **IoT, Automotive, Firmware, Embedded Linux, Vi mạch**.
+Chương trình **Embedded Programming Foundation** được thiết kế cho **Fresher** và **Junior** muốn xây dựng nền móng vững chắc về **Lập trình C, C++, OOP, Design Pattern, Clean Code và MISRA-C** - những kỹ năng cốt lõi giúp bước vào bất kỳ lĩnh vực nào của **IoT, Automotive, Firmware, Embedded Linux, Vi mạch**.
 
 # 🧭 Ý tưởng & Định hướng xây dựng
 
