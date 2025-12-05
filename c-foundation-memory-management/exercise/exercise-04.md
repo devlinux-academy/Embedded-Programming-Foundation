@@ -1,4 +1,4 @@
-# **Bài 4 — Phát hiện Stack Overflow trong ISR có lời gọi lồng nhau (Trung bình/Khó)**
+# **Bài 4 — Phát hiện Stack Overflow trong ISR có lời gọi lồng nhau (Medium/Hard)**
 
 ## **Mục tiêu**
 
