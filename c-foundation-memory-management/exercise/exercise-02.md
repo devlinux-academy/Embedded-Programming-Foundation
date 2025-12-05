@@ -1,63 +1,52 @@
-# **Exercise 2 — Fix Out-of-Memory Crash in Data Logger (Medium/Hard)**
+# **Bài tập 2 — Sửa lỗi Out-of-Memory trong Data Logger (Medium/Hard)**
 
-## **Objective**
+## **Mục tiêu**
 
-Identify and repair a dynamic memory bug that causes out-of-memory conditions.
+Nhận diện và sửa lỗi cấp phát bộ nhớ động dẫn đến tình trạng **hết bộ nhớ (Out-of-Memory)**.
 
-## **Background**
+## **Bối cảnh**
 
-The firmware reads sensor packets and dynamically allocates memory for each packet.
-However, the original programmer mistakenly allocates **gigantic memory blocks** due to integer overflow.
+Firmware đọc các gói dữ liệu (sensor packets) và cấp phát bộ nhớ động cho mỗi gói.
+Tuy nhiên, lập trình viên ban đầu đã mắc lỗi khiến chương trình cấp phát **những vùng nhớ khổng lồ** do **tràn số học (integer overflow)** trong phép nhân.
 
----
+ 
 
-## **Buggy Code**
+## **Yêu cầu**
 
-```c
-uint32_t packet_count;
-scanf("%u", &packet_count);
+Sửa lại code sao cho:
 
-uint32_t size = packet_count * 1024 * 1024; // intended: packet_count MB
-uint8_t *buffer = malloc(size);  // may overflow → request huge memory
+* Không xảy ra tràn số học (integer overflow)
+* Giới hạn bộ nhớ cấp phát tối đa là **128 MB**
+* Nếu `packet_count * 1MB` vượt quá 128 MB → in `"OOM"`
+* Ngược lại, cấp phát bộ nhớ một cách an toàn
 
-if (buffer == NULL)
-    printf("OOM\n");
-else
-    printf("Allocated\n");
-```
+ 
 
-## **Task**
+## **Dữ liệu vào**
 
-Fix the code so:
+Một số nguyên `packet_count`.
 
-* No integer overflow occurs
-* The maximum allowed memory is **128 MB**
-* If `packet_count * 1MB` exceeds 128MB → print `"OOM"`
-* Otherwise allocate safely
+## **Dữ liệu ra**
 
-## **Input Format**
+`Allocated` hoặc `OOM`.
 
-A single integer packet_count.
+ 
 
-## **Output Format**
-
-`Allocated` or `OOM`.
-
-## **Sample Input**
+## **Ví dụ Input**
 
 ```
 200
 ```
 
-## **Sample Output**
+## **Ví dụ Output**
 
 ```
 OOM
 ```
 
----
+ 
 
-## **Starter Code**
+## **Code khởi đầu**
 
 ```c
 #include <stdio.h>
@@ -68,7 +57,7 @@ int main() {
     uint32_t packet_count;
     scanf("%u", &packet_count);
 
-    // BUG: unsafe multiplication, integer overflow possible
+    // BUG: phép nhân không an toàn, có thể bị tràn số
     uint32_t size = packet_count * 1024 * 1024;
 
     uint8_t *buffer = malloc(size);

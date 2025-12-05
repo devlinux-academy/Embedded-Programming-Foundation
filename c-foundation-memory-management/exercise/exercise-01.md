@@ -1,69 +1,53 @@
-# **Exercise 1 — Fix Stack Overflow in Recursive Sensor Calibration (Medium)**
+# **Bài tập 1 — Sửa lỗi Stack Overflow trong hàm hiệu chuẩn cảm biến (Medium)**
 
-## **Objective**
+## **Mục tiêu**
 
-Understand how excessive recursion causes stack overflow and learn how to fix it with controlled recursion depth.
+Hiểu việc sử dụng đệ quy quá sâu dẫn đến lỗi **stack overflow**, và học cách sửa nó bằng việc kiểm soát độ sâu đệ quy.
 
-## **Background**
+## **Bối cảnh**
 
-An embedded system uses a recursive function to calibrate sensors.
-However, the recursion does **not stop correctly** when calibration reaches a stable value → causing **stack overflow** on real hardware.
+Một hệ thống embedded sử dụng hàm đệ quy để hiệu chuẩn cảm biến.
+Tuy nhiên, hàm đệ quy này **không dừng đúng cách** khi giá trị hiệu chuẩn đã ổn định → dẫn đến **tràn stack (stack overflow)** trên phần cứng thật.
 
-Your job is to **debug and fix the function**.
+Nhiệm vụ của bạn là **gỡ lỗi và sửa lại hàm**.
 
----
+## **Yêu cầu**
 
-## **Buggy Code (Given in Template)**
+Viết lại hàm sao cho:
 
-```c
-int calibrate(int x) {
-    // Recursively adjusts until stable
-    if (x > 0)
-        return calibrate(x - 1);  // <--- BUG: no base case for x == 0
-    
-    return calibrate(x); // infinite recursion
-}
-```
+* Đệ quy **dừng lại** khi `x == 0`
+* Hàm **trả về 0**
+* Không xảy ra đệ quy vô hạn
+* Không gây ra lỗi **stack overflow**
 
-## **Task**
+## **Dữ liệu vào**
 
-Rewrite the function so that:
+Một số nguyên **x** — giá trị hiệu chuẩn ban đầu.
 
-* The recursion stops at **x == 0**
-* The function returns **0**
-* No infinite recursion occurs
-* No stack overflow occurs
+## **Dữ liệu ra**
 
-## **Input Format**
+In ra kết quả hiệu chuẩn cuối cùng.
 
-A single integer **x** (initial calibration value)
-
-## **Output Format**
-
-Print the final calibration result.
-
-## **Sample Input**
+## **Ví dụ Input**
 
 ```
 5
 ```
 
-## **Sample Output**
+## **Ví dụ Output**
 
 ```
 0
 ```
 
----
-
-## **Starter Code**
+## **Code khởi đầu**
 
 ```c
 #include <stdio.h>
 #include <stdlib.h>
 
 int calibrate(int x) {
-    // BUGGY FUNCTION - Fix it
+    // HÀM LỖI - Hãy sửa lại
     if (x > 0)
         return calibrate(x - 1);
     return calibrate(x);

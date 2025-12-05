@@ -1,62 +1,51 @@
-# **Exercise 3 — Debug Memory Leak in Telemetry Handler (Medium)**
+# **Bài tập 3 — Gỡ lỗi Memory Leak trong Telemetry Handler (Medium)**
 
-## **Objective**
+## **Mục tiêu**
 
-Identify memory leak caused by missing free() and fix it.
+Xác định lỗi **rò rỉ bộ nhớ (memory leak)** do thiếu `free()` và sửa lại.
 
-## **Background**
+## **Bối cảnh**
 
-This telemetry module leaks memory after each packet.
-The original programmer forgot to free temporary buffers.
+Module telemetry này bị rò rỉ bộ nhớ sau mỗi gói dữ liệu.
+Nguyên nhân là lập trình viên ban đầu **quên giải phóng bộ nhớ tạm thời** được cấp phát trong hàm.
 
----
+## **Yêu cầu**
 
-## **Buggy Code**
+Chỉnh sửa code sao cho:
 
-```c
-char* parse_packet(const char *msg) {
-    char *copy = malloc(100);  // temporary copy
-    strcpy(copy, msg);
+* Hàm `parse_packet()` **không gây rò rỉ bộ nhớ**
+* Hàm **không được trả về vùng nhớ cấp phát động**
+* Gợi ý: trả về một số nguyên đã xử lý, hoặc một cấu trúc nhỏ.
 
-    // ... some processing ...
+Bạn có thể thiết kế lại hoàn toàn hàm.
 
-    return copy;   // BUG: caller never frees it -> leak!
-}
-```
+ 
 
-## **Task**
+## **Dữ liệu vào**
 
-Modify the code so:
+Một dòng văn bản biểu diễn một telemetry packet.
 
-* `parse_packet()` does **not** leak memory
-* It should **not** return dynamically allocated memory
-* Suggestion: return a processed integer or small struct instead.
+## **Dữ liệu ra**
 
-You may redesign the function as needed.
+In `"OK"` sau khi xử lý packet an toàn, không rò rỉ bộ nhớ.
 
-## **Input Format**
+ 
 
-A line of text representing a telemetry packet.
-
-## **Output Format**
-
-Print `"OK"` after safely processing the packet.
-
-## **Sample Input**
+## **Ví dụ Input**
 
 ```
 TEMP:32
 ```
 
-## **Sample Output**
+## **Ví dụ Output**
 
 ```
 OK
 ```
 
----
+ 
 
-## **Starter Code**
+## **Code khởi đầu**
 
 ```c
 #include <stdio.h>
@@ -67,8 +56,6 @@ char* parse_packet(const char *msg) {
     char *copy = malloc(100);
     strcpy(copy, msg);
 
-    // process...
-
     return copy;
 }
 
@@ -78,7 +65,6 @@ int main() {
 
     char *out = parse_packet(msg);
 
-    // BUG: never freed → memory leak
     printf("OK");
 
     return 0;
