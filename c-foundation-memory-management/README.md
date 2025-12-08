@@ -274,13 +274,17 @@ C99 (ISO/IEC 9899:1999) giới thiệu nhiều tính năng mới quan trọng:
 - Cho phép khai báo mảng với kích thước xác định tại runtime
 - Cấp phát trên stack, linh hoạt nhưng có nguy cơ stack overflow
 
-![VLA](images/VLA.png)
+<p align="center">
+  <img src="images/VLA.png">
+</p>
 
 **Hàm nội tuyến (Inline Functions)**
 - Sử dụng từ khóa `inline` để đề xuất trình biên dịch chèn mã trực tiếp
 - Giảm chi phí gọi hàm, tăng hiệu suất
 
-![Inline](images/inline.png)
+<p align="center">
+  <img src="images/inline.png">
+</p>
 
 **Các tính năng khác:**
 - Bình luận một dòng với `//`
@@ -297,7 +301,9 @@ C11 (ISO/IEC 9899:2011) tập trung vào đa luồng và bảo mật:
 - Bộ chỉ định `_Thread_local` cho biến cục bộ của luồng
 - Thư viện `<threads.h>` với mutex, condition variables
 
-![Thread](images/thread.png)
+<p align="center">
+  <img src="images/thread.png">
+</p>
 
 **Cải tiến bảo mật:**
 - Loại bỏ hàm `gets()` không an toàn (dễ gây buffer overflow)
@@ -315,7 +321,9 @@ C11 (ISO/IEC 9899:2011) tập trung vào đa luồng và bảo mật:
 
 Bộ nhớ của chương trình C được chia thành 5 phân đoạn chính:
 
-![Memory Layout](images/memory-layout.png)
+<p align="center">
+  <img src="images/memory-layout.png">
+</p>
 
 ##### **1. Text Segment**
 - **Chức năng:** Lưu trữ mã máy đã biên dịch
@@ -333,7 +341,9 @@ Bộ nhớ của chương trình C được chia thành 5 phân đoạn chính:
   ```
 - **Đặc điểm:** Có quyền đọc-ghi (read-write)
 
-![Data](images/data.png)
+<p align="center">
+  <img src="images/data.png">
+</p>
 
 ##### **3. BSS Segment (Uninitialized Data)**
 - **Chức năng:** Lưu biến global/static chưa khởi tạo hoặc = 0
@@ -362,11 +372,15 @@ Bộ nhớ của chương trình C được chia thành 5 phân đoạn chính:
   - Tự động quản lý (tạo/hủy stack frame)
   - Kích thước giới hạn (thường 1-8MB)
 
-![Stack](images/stack.png)
+<p align="center">
+  <img src="images/stack.png">
+</p>
 
 **Tương tác Stack và Heap:**
 
-![Stack-Heap](images/stack-heap.png)
+<p align="center">
+  <img src="images/stack-heap.png">
+</p>
 
 - Stack và Heap tăng trưởng ngược chiều nhau
 - Khi gặp nhau → hết bộ nhớ (Stack Overflow hoặc OOM)
@@ -379,7 +393,9 @@ Bộ nhớ của chương trình C được chia thành 5 phân đoạn chính:
 
 Stack Frame (Activation Record) là cấu trúc dữ liệu được tạo mỗi khi gọi hàm, chứa:
 
-![Stack Frame](images/stack-frame.png)
+<p align="center">
+  <img src="images/stack-frame.png">
+</p>
 
 **Các thành phần:**
 1. **Tham số hàm (Passed Arguments):** Giá trị truyền vào hàm
@@ -396,7 +412,9 @@ Stack Frame (Activation Record) là cấu trúc dữ liệu được tạo mỗi
 
 ##### **Đệ quy và Stack Frame**
 
-![Recursion](images/dequy2.png)
+<p align="center">
+  <img src="images/dequy2.png">
+</p>
 
 - Mỗi lời gọi đệ quy tạo stack frame mới
 - Đệ quy sâu/vô hạn → Stack Overflow
@@ -407,7 +425,9 @@ Stack Frame (Activation Record) là cấu trúc dữ liệu được tạo mỗi
 
 ##### **A. Stack Overflow**
 
-![Stack Overflow](images/stack-over-flow.png)
+<p align="center">
+  <img src="images/stack-over-flow.png">
+</p>
 
 **Nguyên nhân:**
 1. **Đệ quy vô hạn:** Hàm tự gọi không có điều kiện dừng
@@ -424,7 +444,9 @@ Stack Frame (Activation Record) là cấu trúc dữ liệu được tạo mỗi
 
 ##### **B. Out of Memory (OOM)**
 
-![OOM](images/oom.png)
+<p align="center">
+  <img src="images/oom.png">
+</p>
 
 **Nguyên nhân:**
 1. Cấp phát bộ nhớ quá lớn
@@ -452,7 +474,9 @@ free(ptr);
 
 ##### **C. Memory Leak**
 
-![Memory Leak](images/memory-leak.png)
+<p align="center">
+  <img src="images/memory-leak.png">
+</p>
 
 **Định nghĩa:** Cấp phát bộ nhớ động nhưng không giải phóng khi không dùng
 
