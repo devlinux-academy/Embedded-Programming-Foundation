@@ -2,6 +2,21 @@
 
 Tài liệu này cung cấp kiến thức nền tảng về quản lý bộ nhớ trong ngôn ngữ lập trình C, bao gồm các ví dụ code demo minh họa các lỗi phổ biến và cách xử lý.
 
+## 📑 Mục lục
+
+- [📁 Mô tả Code Demo](#-mô-tả-code-demo)
+  - [1. Memory Leak](#1-memory-leak-memory-leakmemory-leakc)
+  - [2. Out of Memory](#2-out-of-memory-out-of-memoryallocation-mallocc)
+  - [3. Stack Overflow](#3-stack-overflow)
+- [🔧 Hướng dẫn viết Makefile](#-hướng-dẫn-viết-makefile)
+- [📚 Tips và Kiến thức từ Documentation](#-tips-và-kiến-thức-từ-documentation)
+  - [1. Kiểm tra phân vùng bộ nhớ](#1-kiểm-tra-phân-vùng-bộ-nhớ-của-biến-memory-layout)
+  - [2. Quản lý bộ nhớ](#2-quản-lý-bộ-nhớ-memory-management)
+    - [2.1. Tiêu chuẩn C99 và C11](#21-tiêu-chuẩn-c99-và-c11)
+    - [2.2. Cấu trúc bộ nhớ](#22-cấu-trúc-bộ-nhớ-memory-layout)
+    - [2.3. Stack Frame](#23-stack-frame-và-stack-pointer)
+    - [2.4. Các lỗi bộ nhớ phổ biến](#24-các-lỗi-bộ-nhớ-phổ-biến)
+
 ---
 
 ## 📁 Mô tả Code Demo
@@ -233,4 +248,257 @@ Từ đó ta có thể tra phân vùng của biến trong bảng sau:
 ---
 
 ### 2. Quản lý bộ nhớ (Memory Management)
+
+#### 2.1. Tiêu chuẩn C99 và C11
+
+##### **C99 - Các tính năng chính**
+
+C99 (ISO/IEC 9899:1999) giới thiệu nhiều tính năng mới quan trọng:
+
+**Mảng có độ dài biến đổi (VLA - Variable-Length Arrays)**
+- Cho phép khai báo mảng với kích thước xác định tại runtime
+- Cấp phát trên stack, linh hoạt nhưng có nguy cơ stack overflow
+
+![VLA](images/VLA.png)
+
+**Hàm nội tuyến (Inline Functions)**
+- Sử dụng từ khóa `inline` để đề xuất trình biên dịch chèn mã trực tiếp
+- Giảm chi phí gọi hàm, tăng hiệu suất
+
+![Inline](images/inline.png)
+
+**Các tính năng khác:**
+- Bình luận một dòng với `//`
+- Kiểu dữ liệu `long long int`
+- Khởi tạo được chỉ định (Designated Initializers)
+- Hỗ trợ số phức (Complex Numbers)
+- Flexible Array Members
+
+##### **C11 - Các tính năng chính**
+
+C11 (ISO/IEC 9899:2011) tập trung vào đa luồng và bảo mật:
+
+**Hỗ trợ đa luồng**
+- Bộ chỉ định `_Thread_local` cho biến cục bộ của luồng
+- Thư viện `<threads.h>` với mutex, condition variables
+
+![Thread](images/thread.png)
+
+**Cải tiến bảo mật:**
+- Loại bỏ hàm `gets()` không an toàn (dễ gây buffer overflow)
+- Khuyến khích dùng `fgets()` thay thế
+
+**Các tính năng khác:**
+- Biểu thức kiểu chung `_Generic`
+- Khẳng định tĩnh `_Static_assert`
+- Hỗ trợ Unicode cải tiến
+- Cấu trúc và union ẩn danh
+
+---
+
+#### 2.2. Cấu trúc bộ nhớ (Memory Layout)
+
+Bộ nhớ của chương trình C được chia thành 5 phân đoạn chính:
+
+![Memory Layout](images/memory-layout.png)
+
+##### **1. Text Segment**
+- **Chức năng:** Lưu trữ mã máy đã biên dịch
+- **Đặc điểm:** 
+  - Chỉ đọc (read-only) để tránh sửa đổi mã
+  - Có thể chia sẻ giữa nhiều tiến trình
+  - Nằm ở địa chỉ thấp của bộ nhớ ảo
+
+##### **2. Data Segment (Initialized Data)**
+- **Chức năng:** Lưu biến global và static đã khởi tạo ≠ 0
+- **Ví dụ:**
+  ```c
+  int a = 5;
+  static int b = 1;
+  ```
+- **Đặc điểm:** Có quyền đọc-ghi (read-write)
+
+![Data](images/data.png)
+
+##### **3. BSS Segment (Uninitialized Data)**
+- **Chức năng:** Lưu biến global/static chưa khởi tạo hoặc = 0
+- **Ví dụ:**
+  ```c
+  int a;
+  int b = 0;
+  ```
+- **Đặc điểm:** 
+  - Tự động khởi tạo = 0 hoặc NULL
+  - Không lưu giá trị 0 trong file thực thi (tiết kiệm dung lượng)
+
+##### **4. Heap Segment**
+- **Chức năng:** Cấp phát bộ nhớ động tại runtime
+- **Quản lý:** `malloc()`, `calloc()`, `realloc()`, `free()`
+- **Đặc điểm:** 
+  - Phát triển về địa chỉ cao hơn (grows upward)
+  - Phải tự quản lý (cấp phát và giải phóng)
+  - Không giải phóng → Memory Leak
+
+##### **5. Stack Segment**
+- **Chức năng:** Lưu biến cục bộ, tham số hàm, quản lý lời gọi hàm
+- **Cơ chế:** LIFO (Last In First Out)
+- **Đặc điểm:**
+  - Phát triển về địa chỉ thấp hơn (grows downward)
+  - Tự động quản lý (tạo/hủy stack frame)
+  - Kích thước giới hạn (thường 1-8MB)
+
+![Stack](images/stack.png)
+
+**Tương tác Stack và Heap:**
+
+![Stack-Heap](images/stack-heap.png)
+
+- Stack và Heap tăng trưởng ngược chiều nhau
+- Khi gặp nhau → hết bộ nhớ (Stack Overflow hoặc OOM)
+
+---
+
+#### 2.3. Stack Frame và Stack Pointer
+
+##### **Stack Frame là gì?**
+
+Stack Frame (Activation Record) là cấu trúc dữ liệu được tạo mỗi khi gọi hàm, chứa:
+
+![Stack Frame](images/stack-frame.png)
+
+**Các thành phần:**
+1. **Tham số hàm (Passed Arguments):** Giá trị truyền vào hàm
+2. **Địa chỉ trả về (Return Address):** Địa chỉ lệnh tiếp theo sau khi hàm kết thúc
+3. **Biến cục bộ (Local Variables):** Biến khai báo trong hàm
+4. **Frame Pointer (FP/BP):** Trỏ đến vị trí cố định trong khung
+5. **Saved Registers:** Các thanh ghi cần bảo toàn
+
+##### **Stack Pointer (SP)**
+
+- Thanh ghi đặc biệt luôn trỏ đến đỉnh stack
+- **Push:** Giảm SP (trên kiến trúc stack grows down)
+- **Pop:** Tăng SP
+
+##### **Đệ quy và Stack Frame**
+
+![Recursion](images/dequy2.png)
+
+- Mỗi lời gọi đệ quy tạo stack frame mới
+- Đệ quy sâu/vô hạn → Stack Overflow
+
+---
+
+#### 2.4. Các lỗi bộ nhớ phổ biến
+
+##### **A. Stack Overflow**
+
+![Stack Overflow](images/stack-over-flow.png)
+
+**Nguyên nhân:**
+1. **Đệ quy vô hạn:** Hàm tự gọi không có điều kiện dừng
+2. **Đệ quy quá sâu:** Độ sâu vượt quá giới hạn stack
+3. **Mảng cục bộ quá lớn:** Khai báo mảng lớn hơn kích thước stack
+4. **Môi trường hạn chế:** Đa luồng, hệ thống nhúng
+
+**Cách phòng tránh:**
+- ✅ Chuyển đệ quy sang lặp
+- ✅ Sử dụng Tail-call optimization (TCO)
+- ✅ Giới hạn độ sâu đệ quy
+- ✅ Cấp phát mảng lớn trên heap với `malloc()`
+- ⚠️ Tăng kích thước stack (chỉ là giải pháp tạm thời)
+
+##### **B. Out of Memory (OOM)**
+
+![OOM](images/oom.png)
+
+**Nguyên nhân:**
+1. Cấp phát bộ nhớ quá lớn
+2. Memory leak (cấp phát liên tục không giải phóng)
+3. Phân mảnh bộ nhớ
+4. Cơ chế overcommit của Linux
+
+**Cách xử lý:**
+```c
+int *ptr = (int *)malloc(size);
+if (ptr == NULL) {
+    printf("Out of Memory!\n");
+    return 1;
+}
+// Sử dụng ptr
+free(ptr);
+```
+
+**Chiến lược:**
+- ✅ Luôn kiểm tra giá trị trả về của `malloc()`
+- ✅ Pre-allocation và memory pool
+- ✅ Giám sát bộ nhớ chủ động
+- ✅ Sử dụng `mmap` với file backing
+- ✅ Ghi log bằng syslog
+
+##### **C. Memory Leak**
+
+![Memory Leak](images/memory-leak.png)
+
+**Định nghĩa:** Cấp phát bộ nhớ động nhưng không giải phóng khi không dùng
+
+**Nguyên nhân:**
+1. Quên gọi `free()`
+2. Mất tham chiếu đến bộ nhớ đã cấp phát
+3. Gán lại con trỏ không đúng cách
+4. Không giải phóng trong đường dẫn lỗi
+5. Cấp phát trong vòng lặp không giải phóng
+
+**Ví dụ lỗi:**
+```c
+int *ptr = (int*)malloc(sizeof(int) * 10);
+ptr = NULL; // Mất dấu vết bộ nhớ → Memory Leak!
+```
+
+**Cách phát hiện:**
+1. **Kiểm tra thủ công:** Đảm bảo mỗi `malloc()` có `free()` tương ứng
+2. **Valgrind:**
+   ```bash
+   gcc -g -o program program.c
+   valgrind --leak-check=yes ./program
+   ```
+3. **GDB:** Gỡ lỗi và theo dõi bộ nhớ
+4. **Electric Fence:** Phát hiện buffer overflow và leak
+5. **mtrace():** Thư viện GNU C
+6. **Bộ đếm:** Biến toàn cục theo dõi số lần cấp phát/giải phóng
+
+**Best Practices:**
+```c
+void goodPractice() {
+    int *ptr = (int*)malloc(sizeof(int) * 10);
+    if (ptr == NULL) return;
+    
+    // Sử dụng ptr
+    
+    free(ptr);  // ✅ Luôn giải phóng
+    ptr = NULL; // ✅ Tránh dangling pointer
+}
+```
+
+---
+
+## 🎯 Kết luận
+
+Quản lý bộ nhớ trong C đòi hỏi:
+- ✅ Hiểu rõ cấu trúc bộ nhớ (Text, Data, BSS, Heap, Stack)
+- ✅ Nắm vững cơ chế Stack Frame và Stack Pointer
+- ✅ Phòng tránh Stack Overflow, OOM, Memory Leak
+- ✅ Sử dụng công cụ phân tích (Valgrind, GDB)
+- ✅ Luôn kiểm tra và giải phóng bộ nhớ đúng cách
+
+**Nguyên tắc vàng:**
+> "Mỗi `malloc()` phải có một `free()` tương ứng!"
+
+---
+
+## 📖 Tài liệu tham khảo
+
+- ISO/IEC 9899:1999 (C99 Standard)
+- ISO/IEC 9899:2011 (C11 Standard)
+- Thư mục `docs/` chứa tài liệu chi tiết
+- Code demo trong `code-demo/` để thực hành
 
