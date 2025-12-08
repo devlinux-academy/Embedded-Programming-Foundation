@@ -4,29 +4,33 @@ Tài liệu này cung cấp kiến thức nền tảng về quản lý bộ nh�
 
 ## 📑 Mục lục
 
- [1. 📁 Mô tả Code Demo](#1-mô-tả-code-demo)
-  
-  [1.1. Memory Leak](#1.1-memory-leak)
-  
-  [1.2. Out of Memory](#1.2-out-of-memory)
-  
-  [1.3. Stack Overflow](#1.3-stack-overflow)
-  
- [2. 🔧 Hướng dẫn viết Makefile](#2-hướng-dẫn-viết-makefile) 
- 
- [3. 📚 Documentation](#3-documentation)
- 
-  [3.1. Kiểm tra phân vùng bộ nhớ](#3.1-kiểm-tra-phân-vùng-bộ-nhớ-của-biến-memory-layout)
-  
-  [3.2. Quản lý bộ nhớ](#3.2-quản-lý-bộ-nhớ-memory-management)
-    
-  [3.2.1. Tiêu chuẩn C99 và C11](#3.2.1-tiêu-chuẩn-c99-và-c11)
-    
-  [3.2.2. Cấu trúc bộ nhớ](#3.2.2-cấu-trúc-bộ-nhớ-memory-layout)
-    
-  [3.2.3. Stack Frame](#3.2.3-stack-frame-và-stack-pointer)
-    
-  [3.2.4. Các lỗi bộ nhớ phổ biến](#3.2.4-các-lỗi-bộ-nhớ-phổ-biến)
+[1. 📁 Mô tả Code Demo](#-1-mô-tả-code-demo)
+
+[1.1. Memory Leak](#11-memory-leak-memory-leakmemory-leakc)
+
+[1.2. Out of Memory](#12-out-of-memory-out-of-memoryallocation-mallocc)
+
+[1.3. Stack Overflow](#13-stack-overflow)
+
+[2. 🔧 Hướng dẫn viết Makefile](#-2-hướng-dẫn-viết-makefile)
+
+[2.1. Makefile cơ bản](#21-makefile-cơ-bản-để-biên-dịch-các-code-demo)
+
+[2.2. Cách sử dụng](#22-cách-sử-dụng-makefile)
+
+[3. 📚 Documentation](#-3-documentation)
+
+[3.1. Kiểm tra phân vùng bộ nhớ](#31-kiểm-tra-phân-vùng-bộ-nhớ-của-biến-memory-layout)
+
+[3.2. Quản lý bộ nhớ](#32-quản-lý-bộ-nhớ-memory-management)
+
+[3.2.1. Tiêu chuẩn C99 và C11](#321-tiêu-chuẩn-c99-và-c11)
+
+[3.2.2. Cấu trúc bộ nhớ](#322-cấu-trúc-bộ-nhớ-memory-layout)
+
+[3.2.3. Stack Frame](#323-stack-frame-và-stack-pointer)
+
+[3.2.4. Các lỗi bộ nhớ phổ biến](#324-các-lỗi-bộ-nhớ-phổ-biến)
 
 ---
 
