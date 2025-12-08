@@ -4,26 +4,37 @@ Tài liệu này cung cấp kiến thức nền tảng về quản lý bộ nh�
 
 ## 📑 Mục lục
 
-- [📁 Mô tả Code Demo](#-mô-tả-code-demo)
-  - [1. Memory Leak](#1-memory-leak-memory-leakmemory-leakc)
-  - [2. Out of Memory](#2-out-of-memory-out-of-memoryallocation-mallocc)
-  - [3. Stack Overflow](#3-stack-overflow)
-- [🔧 Hướng dẫn viết Makefile](#-hướng-dẫn-viết-makefile)
-- [📚 Tips và Kiến thức từ Documentation](#-tips-và-kiến-thức-từ-documentation)
-  - [1. Kiểm tra phân vùng bộ nhớ](#1-kiểm-tra-phân-vùng-bộ-nhớ-của-biến-memory-layout)
-  - [2. Quản lý bộ nhớ](#2-quản-lý-bộ-nhớ-memory-management)
-    - [2.1. Tiêu chuẩn C99 và C11](#21-tiêu-chuẩn-c99-và-c11)
-    - [2.2. Cấu trúc bộ nhớ](#22-cấu-trúc-bộ-nhớ-memory-layout)
-    - [2.3. Stack Frame](#23-stack-frame-và-stack-pointer)
-    - [2.4. Các lỗi bộ nhớ phổ biến](#24-các-lỗi-bộ-nhớ-phổ-biến)
+ [1. 📁 Mô tả Code Demo](#1-mô-tả-code-demo)
+  
+  [1.1. Memory Leak](#1.1-memory-leak)
+  
+  [1.2. Out of Memory](#1.2-out-of-memory)
+  
+  [1.3. Stack Overflow](#1.3-stack-overflow)
+  
+ [2. 🔧 Hướng dẫn viết Makefile](#2-hướng-dẫn-viết-makefile) 
+ 
+ [3. 📚 Documentation](#3-documentation)
+ 
+  [3.1. Kiểm tra phân vùng bộ nhớ](#3.1-kiểm-tra-phân-vùng-bộ-nhớ-của-biến-memory-layout)
+  
+  [3.2. Quản lý bộ nhớ](#3.2-quản-lý-bộ-nhớ-memory-management)
+    
+  [3.2.1. Tiêu chuẩn C99 và C11](#3.2.1-tiêu-chuẩn-c99-và-c11)
+    
+  [3.2.2. Cấu trúc bộ nhớ](#3.2.2-cấu-trúc-bộ-nhớ-memory-layout)
+    
+  [3.2.3. Stack Frame](#3.2.3-stack-frame-và-stack-pointer)
+    
+  [3.2.4. Các lỗi bộ nhớ phổ biến](#3.2.4-các-lỗi-bộ-nhớ-phổ-biến)
 
 ---
 
-## 📁 Mô tả Code Demo
+## 📁 1. Mô tả Code Demo
 
 Thư mục `code-demo` chứa các ví dụ minh họa các lỗi bộ nhớ phổ biến trong C:
 
-### 1. Memory Leak (`memory-leak/memory-leak.c`)
+### 1.1. Memory Leak (`memory-leak/memory-leak.c`)
 **Mục đích:** Minh họa lỗi rò rỉ bộ nhớ (memory leak)
 
 **Mô tả:** 
@@ -32,7 +43,7 @@ Thư mục `code-demo` chứa các ví dụ minh họa các lỗi bộ nhớ ph�
 - Dẫn đến tiêu thụ bộ nhớ tăng dần cho đến khi hệ thống cạn kiệt tài nguyên
 - Kết quả: Out of Memory hoặc bị OOM Killer chấm dứt tiến trình
 
-### 2. Out of Memory (`out-of-memory/allocation-malloc.c`)
+### 1.2. Out of Memory (`out-of-memory/allocation-malloc.c`)
 **Mục đích:** Minh họa lỗi cạn kiệt bộ nhớ khi cấp phát
 
 **Mô tả:**
@@ -41,7 +52,7 @@ Thư mục `code-demo` chứa các ví dụ minh họa các lỗi bộ nhớ ph�
 - Xử lý trường hợp `malloc()` trả về `NULL` khi không đủ bộ nhớ
 - Minh họa cách xử lý lỗi OOM đúng cách
 
-### 3. Stack Overflow
+### 1.3. Stack Overflow
 
 #### a. Đệ quy vô hạn (`stack-overflow/recursive.c`)
 **Mục đích:** Minh họa stack overflow do đệ quy vô hạn
@@ -63,9 +74,9 @@ Thư mục `code-demo` chứa các ví dụ minh họa các lỗi bộ nhớ ph�
 
 ---
 
-## 🔧 Hướng dẫn viết Makefile
+## 🔧 2. Hướng dẫn viết Makefile
 
-### Makefile cơ bản để biên dịch các code demo:
+### 2.1. Makefile cơ bản để biên dịch các code demo:
 
 ```makefile
 # Compiler và flags
@@ -119,7 +130,7 @@ clean:
 .PHONY: all clean run-memory-leak run-oom run-stack-recursive run-stack-array
 ```
 
-### Cách sử dụng Makefile:
+### 2.2. Cách sử dụng Makefile:
 
 ```bash
 # Biên dịch tất cả
@@ -143,9 +154,9 @@ make clean
 
 ---
 
-## 📚 Tips và Kiến thức từ Documentation
+## 📚 3. Documentation
 
-### 1. Kiểm tra phân vùng bộ nhớ của biến (Memory Layout)
+### 3.1. Kiểm tra phân vùng bộ nhớ của biến (Memory Layout)
 
 Trong tài liệu này chúng ta sẽ tìm hiểu về phân vùng bộ nhớ Memory Layout của chương trình C thông qua ví dụ code sau:
 
@@ -247,9 +258,9 @@ Từ đó ta có thể tra phân vùng của biến trong bảng sau:
 
 ---
 
-### 2. Quản lý bộ nhớ (Memory Management)
+### 3.2. Quản lý bộ nhớ (Memory Management)
 
-#### 2.1. Tiêu chuẩn C99 và C11
+#### 3.2.1. Tiêu chuẩn C99 và C11
 
 ##### **C99 - Các tính năng chính**
 
@@ -296,7 +307,7 @@ C11 (ISO/IEC 9899:2011) tập trung vào đa luồng và bảo mật:
 
 ---
 
-#### 2.2. Cấu trúc bộ nhớ (Memory Layout)
+#### 3.2.2. Cấu trúc bộ nhớ (Memory Layout)
 
 Bộ nhớ của chương trình C được chia thành 5 phân đoạn chính:
 
@@ -358,7 +369,7 @@ Bộ nhớ của chương trình C được chia thành 5 phân đoạn chính:
 
 ---
 
-#### 2.3. Stack Frame và Stack Pointer
+#### 3.2.3. Stack Frame và Stack Pointer
 
 ##### **Stack Frame là gì?**
 
@@ -388,7 +399,7 @@ Stack Frame (Activation Record) là cấu trúc dữ liệu được tạo mỗi
 
 ---
 
-#### 2.4. Các lỗi bộ nhớ phổ biến
+#### 3.2.4. Các lỗi bộ nhớ phổ biến
 
 ##### **A. Stack Overflow**
 
@@ -500,4 +511,3 @@ Quản lý bộ nhớ trong C đòi hỏi:
 - ISO/IEC 9899:1999 (C99 Standard)
 - ISO/IEC 9899:2011 (C11 Standard)
 - Code demo trong `code-demo/` để thực hành
-
