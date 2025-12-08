@@ -499,6 +499,5 @@ Quản lý bộ nhớ trong C đòi hỏi:
 
 - ISO/IEC 9899:1999 (C99 Standard)
 - ISO/IEC 9899:2011 (C11 Standard)
-- Thư mục `docs/` chứa tài liệu chi tiết
 - Code demo trong `code-demo/` để thực hành
 
